@@ -154,16 +154,159 @@
 # window.mainloop()
 
 
+# from tkinter import * 
+# window = Tk() 
+
+# btnList = [None] * 3 
+
+# for i in range(0,3) :
+#   btnList[i] = Button(window, text="버튼" + str(i+1))
+  
+# for btn in btnList :
+#   btn.pack(side = TOP,fill = X, padx = 10, pady = 10 ,ipadx = 10, ipady = 10)
+  
+# window.mainloop() 
+
+# ====================
+# from tkinter import * 
+# window = Tk() 
+
+
+# window.mainloop() 
+# ====================
+
+# 맥북에서 안보임.
+
+# from tkinter import * 
+
+# window = Tk() 
+
+# mainMenu = Menu(window)
+# window.config(menu=mainMenu)
+
+# fileMenu = Menu(mainMenu)
+# mainMenu.add_cascade(label="파일", menu = fileMenu)
+# fileMenu.add_command(label="열기")
+# fileMenu.add_separator()
+# fileMenu.add_command(label="종료")
+
+# window.mainloop()
+
+
+# from tkinter import * 
+# from tkinter import messagebox
+
+# def func_open() :
+#   messagebox.showinfo("메뉴 선택","열기 메뉴를 선택함")
+  
+# def func_exit() :
+#   window.quit()
+#   window.destroy()
+
+# window = Tk() 
+
+# mainMenu = Menu(window)
+# window.config(menu=mainMenu)
+
+# fileMenu = Menu(mainMenu)
+# mainMenu.add_cascade(label="파일", menu = fileMenu)
+# fileMenu.add_command(label="열기", command= func_open)
+# fileMenu.add_separator()
+# fileMenu.add_command(label="종료", command=func_exit)
+
+# window.mainloop()
+
+# from tkinter import * 
+# from tkinter.simpledialog import *
+
+# window = Tk() 
+# window.geometry("400x100")
+
+# label1 = Label(window, text="입력된 값")
+# label1.pack()
+
+# value = askinteger("확대배수","주사위 1~6 입력.", minvalue=1, maxvalue=6)
+
+# label1.configure(text=str(value))
+# window.mainloop()
+
+
+# from tkinter import * 
+# from tkinter.filedialog import *
+
+# window = Tk() 
+# window.geometry("400x100")
+
+# label1 = Label(window, text="선택된 파일 이름")
+# label1.pack()
+
+# filename = askopenfilename(parent= window, 
+#                            filetypes=(("GIF 파일","*.gif"),("모든파일","*.*")))
+
+
+
+# label1.configure(text=str(filename))
+# window.mainloop()
+
+
+
+# from tkinter import * 
+# from tkinter.filedialog import *
+
+# window = Tk() 
+# window.geometry("400x100")
+
+# label1 = Label(window, text="선택된 파일 이름")
+# label1.pack()
+
+# saveFp = asksaveasfile(parent=window, mode="w",
+#                        defaultextension=".jpg",
+#                        filetypes=(("JPG 파일","*.jpg"),("모든 파일","*.*")))
+
+# label1.configure(text=str(saveFp))
+# window.mainloop()
+# saveFp.close()
+
+
 from tkinter import * 
+from tkinter.filedialog import *
+
+def func_open() :
+  filename = askopenfilename(parent= window, 
+                           filetypes=(("GIF 파일","*.gif"),("모든파일","*.*")))
+  photo = PhotoImage(file= filename)
+  
+  print("photo.width(): ",str(photo.width()),"photo.height() : ", str(photo.height()))
+  # print("0,0 있니? ", str(photo.get(0,0)))
+  for i in range(0,photo.width()):
+    for k in range(0,photo.height()):
+     color = photo.get(i,k) / 3
+     photo.put("#%02x%02x%02x" % color,(i,k))
+      
+  
+  pLabel.configure(image = photo)
+  pLabel.image = photo
+
+def func_exit() :
+  window.quit()
+  window.destroy()
+
+
 window = Tk() 
+window.geometry("400x500")
+window.title("사진 감상")
 
-btnList = [None] * 3 
+photo = PhotoImage()
+pLabel = Label(window, image= photo)
+pLabel.pack(expand=1, anchor= CENTER)
 
-for i in range(0,3) :
-  btnList[i] = Button(window, text="버튼" + str(i+1))
-  
-for btn in btnList :
-  btn.pack(side = TOP,fill = X, ipadx = 10, ipady = 10)
-  
-window.mainloop() 
+mainMenu = Menu(window)
+window.config(menu=mainMenu)
 
+fileMenu = Menu(mainMenu)
+mainMenu.add_cascade(label="파일", menu = fileMenu)
+fileMenu.add_command(label="열기", command= func_open)
+fileMenu.add_separator()
+fileMenu.add_command(label="종료", command=func_exit)
+
+window.mainloop()
