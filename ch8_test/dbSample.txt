@@ -35,3 +35,14 @@ ex8)
 .header on 
 .mode column
 select * from userTable;
+
+ex9)
+select id, birthYear from userTable where birthYear <=1999;
+
+select * from userTable where id = 'park';
+
+select * from userTable order by birthYear;
+
+select * from userTable order by birthYear desc;
+
+.quit
