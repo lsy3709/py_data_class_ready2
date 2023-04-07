@@ -8,27 +8,53 @@ from tkinter import messagebox
 
 ssl_context = ssl.SSLContext()
 ssl_context.verify_mode = ssl.CERT_NONE
-imgLinkUrl = ""
+imgLinkUrl,subject,link ,press,pDate,pTime= "","","","","",""
 
+null = None
 ## 함수 선언 부분
-def insertData() :
+def insertData(subject,press,pDate,pTime,link,imgLinkUrl) :
     con, cur = None, None
-    data1, data2, data3, data4 = "", "", "", ""
+    data = ""
+    data0, data1, data2, data3, data4, data5, data6 = "", "", "", "", "", "",""
     sql=""
 
-    con = pymysql.connect(host='127.0.0.1', user='root', password='1234', database='naverDB', charset='utf8')
+    con = pymysql.connect(host='127.0.0.1', user='root', password='1234', database='naverNewsLive', charset='utf8')
     cur = con.cursor()
-
-    data1 = edt1.get(); data2 = edt2.get(); data3 = edt3.get(); data4 = edt4.get()
+#    title` VARCHAR(200) NULL,
+#   `publisher` VARCHAR(45) NULL,
+#   `newsDate` VARCHAR(10) NULL,
+#   `newsTime` VARCHAR(6) NULL,
+#   `newsDetail` VARCHAR(200) NULL,
+#   `newsImgUrl` VARCHAR(200) NULL,
+    # data0 = data10
+    data1 = subject; 
+    data2 = press; 
+    data3 = pDate; 
+    data4 = pTime;
+    data5 = link;
+    data6 = imgLinkUrl;
+    #
     try :
-        sql = "INSERT INTO userTable VALUES('" + data1 + "','" + data2 + "','" + data3 + "'," + data4 + ")"
+        
+        print(null)
+        print(data1)
+        print(data2)
+        print(data3)
+        print(data4)
+        print(data5)
+        print(data6)
+        sql = "INSERT INTO newsTable (title,publisher,newsDate,newsTime,newsDetail,newsImgUrl)  VALUES('"+ data1 + "','" + data2 + "','" + data3 + "','" + data4 + "','"+ data5 +"','"+data6+ "')"
         cur.execute(sql)
+        
     except :
-        messagebox.showerror('오류', '데이터 입력 오류가 발생함')
+        print("예외 발생")
+        # messagebox.showerror('오류', '데이터 입력 오류가 발생함')
     else :
-        messagebox.showinfo('성공', '데이터 입력 성공')
+        print("성공")
+        # messagebox.showinfo('성공', '데이터 입력 성공')
     con.commit()
     con.close()
+##
 
 nateUrl = "https://news.nate.com/recent?mid=n0100"
 while True :
@@ -43,9 +69,11 @@ while True :
 
         subject = tag.find('strong', {'class': 'tit'}).text
         link = tag.find('a', {'class': 'lt1'})['href']
+        link = 'https:' + link
         imgLink = tag.find('em',{'class':'mediatype'})
         if imgLink != None:
             imgLinkUrl = imgLink.find('img')['src']
+            imgLinkUrl = 'https:' + imgLinkUrl
         else :
             imgLinkUrl = '이미지가 존재 하지 않음'
         pressAndDate = tag.find('span', {'class': 'medium'}).text
@@ -59,10 +87,10 @@ while True :
             press = press1+press2
         else :
             continue
-
+        insertData(subject,press,pDate,pTime,link,imgLinkUrl)
         print('(' , num, ')', subject)
         print('\t https:'+link, press, pDate, pTime)
-        print('\t imgLink : https:'+ imgLinkUrl)
+        print('\t imgLink : '+ imgLinkUrl)
         num += 1
 
     time.sleep(60)

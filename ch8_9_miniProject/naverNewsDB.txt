@@ -1,5 +1,5 @@
 CREATE TABLE `naverNewsLive`.`newsTable` (
-  `num` INT NOT NULL AUTO_INCREMENT,
+  `num` INT AUTO_INCREMENT,
   `title` VARCHAR(200) NULL,
   `publisher` VARCHAR(45) NULL,
   `newsDate` VARCHAR(10) NULL,
