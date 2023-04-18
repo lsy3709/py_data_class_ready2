@@ -1,6 +1,9 @@
 import pandas as pd
+from pandas import DataFrame
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from pandas import DataFrame
 
 inFilename = 'Excel/singer.xlsx'
 outFilename = 'Excel/singer_over6.xlsx'
@@ -14,13 +17,15 @@ df_singer_over6 = df_singer_over6.sort_values(by=['인원'], axis=0, ascending=F
 
 df_singer_over6 = df_singer_over6.loc[:, ['아이디', '이름', '인원', '유튜브 조회수']]
 
-x_data = df_singer_over6['아이디']
-y_data = df_singer_over6['인원']
-colorAry = [ np.random.choice(['red', 'green', 'blue', 'brown', 'gold', 'lime', 'aqua', 'magenta', 'purple']) for _ in range(len(x_data))]
-plt.bar(x_data, y_data, color=colorAry)
-plt.show()
-
-writer = pd.ExcelWriter(outFilename)
-df_singer_over6.to_excel(writer, sheet_name='singer', index=False)
+ 
+## DataFrame 만들기
+df = DataFrame({"Temp": [20.1, 22.3, 21.5, 20.7, 21.2]})
+ 
+## XlsxWriter 엔진으로 Pandas writer 객체 만들기
+writer = pd.ExcelWriter('pandas_xlsxWriter.xlsx', engine='xlsxwriter')
+ 
+## DataFrame을 xlsx에 쓰기
+df_singer_over6.to_excel(writer, sheet_name='Sheet1')
+ 
+## Pandas writer 객체 닫기
 writer.close()
-print('Save. OK~')
