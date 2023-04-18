@@ -8,19 +8,19 @@ with open("test1.txt","r") as inFp :
 # inFp = open("C:/Temp/data1.txt", "r", encoding="utf-8" )
 #inFp = open("C:/Temp/data1.txt", "r")
 
-# while True :
-#     inStr = inFp.readline()
-#     if inStr == "" :
-#         print("")
-#         break;
-#     print("%d : %s" %(lineNum, inStr), end="")
-#     lineNum += 1
+    while True :
+        inStr = inFp.readline()
+        if inStr == "" :
+            print("")
+            break;
+        print("%d : %s" %(lineNum, inStr), end="")
+        lineNum += 1
 
-    inList = inFp.readlines()
-print(inList)
+#     inList = inFp.readlines()
+# print(inList)
 
-for inStr in inList:
-   print("%d : %s" % (lineNum,inStr), end="")
-   lineNum += 1
+# for inStr in inList:
+#    print("%d : %s" % (lineNum,inStr), end="")
+#    lineNum += 1
 
 # inFp.close()
